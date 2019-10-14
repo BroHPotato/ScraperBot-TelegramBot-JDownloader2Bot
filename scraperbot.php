@@ -31,7 +31,6 @@ foreach ($links as $searchlink) {
       send_telegram_message($searchlink, $config);
     }
   }
-  var_dump($searchlink);
   echo "\n------------------------------------\n";
 }
 echo "TERMINO\n";
