@@ -24,5 +24,9 @@ Use the bot very simple, you need to put the link of the pages in the file *Link
 `https://link.to.the.download.page##https://link.to.image.page##imdbIdCode##Relative/path/to/download/folder` between the different parameter you need to insert the *delimiter* present in the file *config.ini*. Each line of the file rappresents one page to check for downloads, so you need to make sure the file is formatted correctly.
 You can find the imbdIdCode in the description of the series in the page of thetvdb
 
+## Generals
 
-Now you're good to go, Bye~~ and have fun
+This bot create file *.crawljob* for jdownloader, you need to setup it with the watchfolder extention!
+For other useful script see https://github.com/BroHPotato/JDownloader-2-Scripts
+
+Now you're good to go, **Bye~~ and have fun**
