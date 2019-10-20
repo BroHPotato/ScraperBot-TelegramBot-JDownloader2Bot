@@ -5,14 +5,16 @@ include "web_elaboration.php";
 include "file_elaboration.php";
 
 error_reporting(E_ALL);
-$config = parse_ini_file("config.ini");
-$logfile=fopen($config["logPath"]."Log".date("H-i").".txt", "a");
-fwrite($logfile,"START\n------------------------------------\nCONFIGURATION\n");
+echo "START\n";
+echo "------------------------------------\n";
+echo "CONFIGURATION\n";
 $config = init();
-fwrite($logfile,"------------------------------------\nSTART SEARCHING\n");
+echo "------------------------------------\n";
+echo "START SEARCHING";
 $links = get_links($config);
+
 foreach ($links as $searchlink) {
-  fwrite($logfile,"ELABORATION OF ".$searchlink["Title"]."\n");
+  echo "ELABORAZIONE ".$searchlink["Title"]."\n";
   $response = get_page($searchlink["Link"]);
   $html = new simple_html_dom();
   $html->load($response);
@@ -29,7 +31,7 @@ foreach ($links as $searchlink) {
       send_telegram_message($searchlink, $config);
     }
   }
-  fwrite($logfile,"------------------------------------\n");
+  var_dump($searchlink);
+  echo "\n------------------------------------\n";
 }
-fwrite($logfile,"END\n");
-fclose($logfile);
+echo "TERMINO\n";
