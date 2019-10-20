@@ -1,27 +1,7 @@
 <?php
-function get_links($config)  {
-  $svfile = fopen($config["linksFile"], "r") or die("Unable to open the file");
-  $links = false;
-  while (!feof($svfile)) {
-    $string = fgets($svfile);
-    if ($string) {
-      $exploded = explode($config["delimiter"],$string);
-      $title = explode("/",$exploded[3])[0];
-      $links[] = array( "Title" => $title,
-                        "Poster" => $exploded[1],
-                        "imdbId" => $exploded[2],
-                        "Link" => $exploded[0],
-                        "SaveFolder" => $exploded[3]);
-    }
-  }
-  fclose($svfile);
-  return $links;
-}
+
 function check_exist_files($searchlink, $config) {
-  global $logfile;
-  $fol=substr_replace($config["savePath"].$searchlink["SaveFolder"] ,"", -1);
-  fwrite($logfile,"SEARCH IN :".$fol."\n");
-  $dir = scandir($fol);
+  $dir = scandir($config["savePath"].$searchlink["SaveFolder"]);
   $toDownload = false;
   if ($dir) {
     $fileList = array_diff($dir, array('..', '.'));
@@ -37,14 +17,13 @@ function check_exist_files($searchlink, $config) {
     $toDownload = $searchlink["Episode"];
   }
   if ($toDownload) {
-    fwrite($logfile,"NEW DOWNLOAD FOUND\n");
+    echo "NUOVI DOWNLOAD TROVATI\n";
   } else {
-    fwrite($logfile,"NO NEW DOWNLOAD FOUND\n");
+    echo "NESSUN NUOVO DOWNLOAD TROVATO\n";
   }
   return $toDownload;
 }
 function get_list_present($fileList, $config) {
-  global $logfile;
   $presentList = false;
   foreach ($fileList as $value) {
     preg_match($config["regexTitle"], $value, $episode);
@@ -52,12 +31,11 @@ function get_list_present($fileList, $config) {
     $presentList[$numEpisode[0]] = $value; // n episodio => titolo completo presenti
   }
   if ($presentList) {
-    fwrite($logfile,"SAVED EPISODE FOUND\n");
+    echo "EPISODI SALVATI TROVATI\n";
   }
   return $presentList;
 }
 function create_new_download($toDownload, $config)  {
-  global $logfile;
   $job = fopen($config["crawljobPath"].sha1($toDownload["Title"]).".crawljob", "w+");
   if ($job)  {
     fwrite($job, "->NEW ENTRY<-\n");
@@ -71,6 +49,6 @@ function create_new_download($toDownload, $config)  {
     fwrite($job, "autoStart=TRUE\n");
     fwrite($job, "autoConfirm=TRUE");
     fclose($job);
-    fwrite($logfile,"CRAWLJOB CREATED IN ".$config["crawljobPath"]."\nCON NOME ".sha1($toDownload["Title"])."\n");
+    echo "CRAWLJOB CREATO IN ".$config["crawljobPath"]."\nCON NOME ".sha1($toDownload["Title"])."\n";
   }
 }
