@@ -1,0 +1,71 @@
+.content{
+margin-top: 0.2em;
+margin: auto 2em;
+}
+.icon{
+  width: 80px;
+  height: 80px;
+  margin-right: 0.3em;
+}
+a span, button span{
+  padding-right: 0.3em;
+}
+.fa-telegram{
+  color: #5682a3;
+  margin-right: 0.3em;
+}
+.fa-download{
+  margin-right: 0.3em;
+}
+.contenttable td, .imgposter{
+  vertical-align: middle;
+}
+.poster{
+  text-align: center;
+}
+.img-thumbnail{
+  max-width: 50%;
+}
+#previewimg{
+  max-width: 10%;
+  margin: 1em;
+}
+.badge{
+  margin-left: 0.3em;
+}
+.activeservices table{
+  width: auto;
+}
+.submenu, .activeservices{
+  display: inline-block;
+}
+.submenu{
+  vertical-align: top;
+  padding-top: 1em;
+  float: inline-end;
+}
+.imgposter{
+  margin: auto;
+}
+.card{
+  margin: 0.2em auto;
+  max-width: 98%;
+}
+.success{
+  background-color:#28a74570;
+}
+.warning{
+  background-color: #ffc10770;
+}
+.danger{
+  background-color: #dc354570;
+}
+.card-body p, .card-body button{
+  display: inline;
+}
+.card-body button{
+  float: inline-end;
+}
+td input{
+  width: 95%;
+}
