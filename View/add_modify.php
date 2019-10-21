@@ -1,6 +1,6 @@
 <form action="<?php echo "".($_GET["a"]=="modify") ? "modify.php?id=".$_GET["id"] : "add.php"; ?>" method="post">
   <div class="row">
-    <img id="previewimg" class="col img-thumbnail" src="_general/<?php echo "".($_GET["a"]=="modify") ? $entry[$_GET["id"]]["Poster"] : "film-poster-placeholder.png"; ?>" alt="">
+    <img id="previewimg" class="col img-thumbnail" src="<?php echo "".($_GET["a"]=="modify") ? $entry[$_GET["id"]]["Poster"] : "_general/film-poster-placeholder.png"; ?>" alt="">
     <div class="col imgposter">
       <div class="form-group row">
         <label for="previewitem" class="col-form-label">Poster</label>

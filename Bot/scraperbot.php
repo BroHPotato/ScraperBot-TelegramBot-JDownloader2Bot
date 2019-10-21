@@ -4,8 +4,10 @@ include "utility.php";
 include "web_elaboration.php";
 include "file_elaboration.php";
 
+$inipath = "/path/to/config.ini";
+
 error_reporting(E_ALL);
-$config = parse_ini_file("config.ini");
+$config = parse_ini_file($inipath);
 $logfile=fopen($config["logPath"]."Log".date("H-i").".txt", "a");
 fwrite($logfile,"START\n------------------------------------\nCONFIGURATION\n");
 $config = init();

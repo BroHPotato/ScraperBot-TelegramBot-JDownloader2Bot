@@ -1,7 +1,8 @@
 <?php
   function init() {
+    global $inipath;
     global $logfile;
-    $config = parse_ini_file("config.ini");
+    $config = parse_ini_file($inipath);
     fwrite($logfile,"Searching for \"".$config["htmlTags"]."\"\n");
     if (!array_key_exists("regexTitle", $config)) {
       $config["regexTitle"] = "/.*/";

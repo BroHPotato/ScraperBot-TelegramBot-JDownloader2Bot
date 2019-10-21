@@ -40,7 +40,11 @@
     $result = curl_exec($ch);
     curl_close($ch);
     $return = json_decode($result, true)["data"];
-    fwrite($logfile,$return."\n");
+    if ($return) {
+      fwrite($logfile,"Details recived\n");
+    } else {
+      fwrite($logfile,"Details not recived\n");
+    }
     return $return;
   }
 
