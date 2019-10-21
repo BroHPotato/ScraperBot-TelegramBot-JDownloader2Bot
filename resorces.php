@@ -105,7 +105,10 @@ function save_ini($oldconfig, $newconfig){
   $config = fopen("config.ini", "w") or die("Unable to open the file");
   $check = false;
   foreach ($oldconfig as $key => $value) {
-    $check = fwrite($config, $key."=\"".$value."\"\n");
+    if($key=="telegram" || $key=="jdownloader")
+      $check = fwrite($config, $key."=".$value."\n");
+    else
+      $check = fwrite($config, $key."=\"".$value."\"\n");
   }
   fwrite($logfile,"CONFIGURATIN CHANGED\n");
   fclose($config);

@@ -58,7 +58,7 @@ function get_list_present($fileList, $config) {
 }
 function create_new_download($toDownload, $config)  {
   global $logfile;
-  $job = fopen($config["crawljobPath"].sha1($toDownload["Title"]).".crawljob", "w+");
+  $job = fopen($config["crawljobPath"].sha1($toDownload["SaveFolder"]).".crawljob", "w+");
   if ($job)  {
     fwrite($job, "->NEW ENTRY<-\n");
     fwrite($job, "packageName=".$toDownload["Title"]."\n");
@@ -71,6 +71,6 @@ function create_new_download($toDownload, $config)  {
     fwrite($job, "autoStart=TRUE\n");
     fwrite($job, "autoConfirm=TRUE");
     fclose($job);
-    fwrite($logfile,"CRAWLJOB CREATED IN ".$config["crawljobPath"]."\nCON NOME ".sha1($toDownload["Title"])."\n");
+    fwrite($logfile,"CRAWLJOB CREATED IN ".$config["crawljobPath"]."\nCALLED ".sha1($toDownload["SaveFolder"]).".crawljob"."\n");
   }
 }

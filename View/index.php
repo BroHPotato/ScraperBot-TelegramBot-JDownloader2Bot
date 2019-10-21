@@ -15,7 +15,7 @@
 </div>
 <div class="submenu">
   <a href="index.php?a=add" class="btn btn-primary"><span class="fas fa-plus"></span>Add</a>
-  <a href="scraperbot.php" class="btn btn-info"><span class="fas fa-terminal"></span>Run now</a>
+  <a href="run.php" class="btn btn-info"><span class="fas fa-terminal"></span>Run now</a>
 </div>
 <div class="contenttable table-responsive-lg">
   <table class="table table-striped table-hover">
