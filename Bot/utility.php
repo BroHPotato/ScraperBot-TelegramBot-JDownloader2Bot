@@ -26,7 +26,7 @@
       $config["jdownloader"] = false;
       fwrite($logfile,"jdownloader file creation disable\n");
     } else {
-      fwrite($logfile,"jdownloader file creation disable\n");
+      fwrite($logfile,"jdownloader file creation enable\n");
     }
     return $config;
   }
