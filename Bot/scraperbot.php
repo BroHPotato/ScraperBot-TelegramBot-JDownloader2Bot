@@ -1,37 +1,31 @@
 <?php
-include "simple_html_dom.php";
-include "utility.php";
-include "web_elaboration.php";
-include "file_elaboration.php";
+include_once "simple_html_dom.php";
+include_once "web_elaboration.php";
+include_once "file_elaboration.php";
+include_once __DIR__ . "/../resorces.php";
 
-$inipath = "/path/to/config.ini";
-
-error_reporting(E_ALL);
-$config = parse_ini_file($inipath);
-$logfile=fopen($config["logPath"]."Log".date("H-i").".txt", "a");
-fwrite($logfile,"START\n------------------------------------\nCONFIGURATION\n");
-$config = init();
-fwrite($logfile,"------------------------------------\nSTART SEARCHING\n");
+$config = init(true, true);
+_log("SEARCHING------------------------------------", $config);
 $links = get_links($config);
 foreach ($links as $searchlink) {
-  fwrite($logfile,"ELABORATION OF ".$searchlink["Title"]."\n");
-  $response = get_page($searchlink["Link"]);
+  _log("ELABORATION OF ".$searchlink["Title"], $config);
+  $response = get_page($searchlink["Link"], $config);
   $html = new simple_html_dom();
   $html->load($response);
   $searchlink["Episode"] = filter_download($html, $config);
 
   if ($searchlink["Episode"]) {
+    $creatred = false;
     $searchlink["MissingEpisode"] = check_exist_files($searchlink, $config);
     if ($searchlink["MissingEpisode"] && $config["jdownloader"]) {
-      create_new_download($searchlink, $config);
+      $creatred = create_new_download($searchlink, $config);
     }
-    if ($searchlink["MissingEpisode"] && $config["telegram"]) {
+  if ($searchlink["MissingEpisode"] && $config["telegram"] && (($config["jdownloader"] && $creatred) || (!$config["jdownloader"] && !$creatred))) { //if telegram is active and (jd is active and the download is created or jd is not active and the download is not created)
       $tvdb_token = get_token($config);
-      $searchlink["Details"] = get_details($searchlink, $tvdb_token);
+      $searchlink["Details"] = get_details($searchlink, $tvdb_token, $config);
       send_telegram_message($searchlink, $config);
     }
   }
-  fwrite($logfile,"------------------------------------\n");
+  _log("------------------------------------", $config);
 }
-fwrite($logfile,"END\n");
-fclose($logfile);
+_log("END\n\n", $config);

@@ -1,19 +1,20 @@
 <?php
-  function get_page($value)  {
-    global $logfile;
-    fwrite($logfile,"Getting the page...\n");
+include_once __DIR__ . "/../resorces.php";
+
+  function get_page($value, $config)  {
+    _log("Getting the page...", $config);
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $value);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $response = curl_exec($ch);
     curl_close($ch);
-    fwrite($logfile,"Page recived\n");
+    _log("Page recived", $config);
     return $response;
   }
+
   function filter_download($html,$config)  {
-    global $logfile;
-    fwrite($logfile,"Filtering the page...\n");
+    _log("Filtering the page...", $config);
     $filteredLinks = false;
     if ($html)	{
       foreach ($html->find($config["htmlTags"]) as $value) {
@@ -23,17 +24,17 @@
         }
       }
       if ($filteredLinks) {
-        fwrite($logfile,"LINKS FOUND\n");
+        _log("Links found", $config);
       }else{
-        fwrite($logfile,"NO LINKS FOUND\n");
+        _log("No links found", $config);
       }
     }
     return $filteredLinks;
   }
-  function get_details($link, $tvdb_token)  {
-    global $logfile;
-    fwrite($logfile,"Getting the details...\n");
-    $ch = curl_init('https://api.thetvdb.com/series/'.$link["imdbId"]);
+
+  function get_details($link, $tvdb_token, $config)  {
+    _log("Getting the details...", $config);
+    $ch = curl_init('https://api.thetvdb.com/series/'.$link["thetvdbId"]);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', "Authorization: Bearer ".$tvdb_token));
@@ -41,16 +42,15 @@
     curl_close($ch);
     $return = json_decode($result, true)["data"];
     if ($return) {
-      fwrite($logfile,"Details recived\n");
+      _log("Details recived", $config);
     } else {
-      fwrite($logfile,"Details not recived\n");
+      _log("Details not recived", $config);
     }
     return $return;
   }
 
   function send_telegram_message($link, $config)  {
-    global $logfile;
-    fwrite($logfile,"Using the Telegram bot...\n");
+    _log("Using the Telegram bot...", $config);
     $to = "https://api.telegram.org/bot".$config["telegramToken"]."/sendPhoto?chat_id=".$config["chatId"];
     $photo = $link["Poster"];
     $caption = urlencode("Hey, é uscito un episodio di <b>".$link["Details"]["seriesName"]."</b>!\n\nDi: <b>".$link["Details"]["network"]."</b>\n\n".$link["Details"]["overview"]."\n\nVai a darci un'occhiata su <a href=\"https://app.plex.tv/desktop\">Plex</a>");
@@ -58,6 +58,25 @@
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
     $return = curl_exec($ch);
     curl_close($ch);
-    fwrite($logfile,"Message sended\n");
+    if ($return) {
+      _log("Message sended", $config);
+    } else {
+      _log("Message not sended", $config);
+    }
     return $return;
+  }
+  function get_token($config)  {
+    $data = array("apikey" => $config["tvdbApiKey"], "userkey" => $config["tvdbUsrKey"], "username" => $config["tvdbUsr"]);
+    $data_string = json_encode($data);
+    _log("Getting the tvdb token...", $config);
+    $ch = curl_init('https://api.thetvdb.com/login');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_string)));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    $tvdb_token = json_decode($result, true)["token"];
+    _log("Token recived", $config);
+    return $tvdb_token;
   }
