@@ -9,7 +9,7 @@ $_err = array(
   "050" => "An error occurred while deleting the log, try again or report this event to the administrator"
 );
 
-$inipath = "/home/pi/ScraperBot/config.ini";
+$inipath = "/path/to/ScraperBot/config.ini";
 
 /**
   *scans the file "config.ini"
