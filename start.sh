@@ -4,9 +4,9 @@
 
 	ServerAdmin webmaster@localhost
 	ServerName ScraperBot
-	DocumentRoot /home/pi/ScraperBot
+	DocumentRoot /path/to/ScraperBot
 
-	<Directory /home/pi/ScraperBot>
+	<Directory /path/to/ScraperBot>
 	    Options Indexes FollowSymLinks Includes ExecCGI
 	    AllowOverride All
 	    Require all granted

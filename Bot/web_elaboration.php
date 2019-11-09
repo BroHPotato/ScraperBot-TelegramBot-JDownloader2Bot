@@ -17,10 +17,11 @@ include_once __DIR__ . "/../resorces.php";
     _log("Filtering the page...", $config);
     $filteredLinks = false;
     if ($html)	{
-      foreach ($html->find($config["htmlTags"]) as $value) {
+      $links = $html->find($config["htmlTags"]);
+      foreach ($links as $key => $value) {
         if(preg_match($config["regexTitle"], $value->plaintext, $episode) && !preg_match("/prossimamente/", $value->href)){
           preg_match($config["regexNumber"], $episode[0], $numEpisode);
-          $filteredLinks[$numEpisode[0]] = $value->href;//n episodio => download
+          $filteredLinks[$numEpisode[0]] = $links[$key]->href;//n episodio => download
         }
       }
       if ($filteredLinks) {

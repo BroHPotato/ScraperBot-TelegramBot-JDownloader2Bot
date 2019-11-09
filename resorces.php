@@ -18,6 +18,7 @@ $inipath = "/path/to/ScraperBot/config.ini";
 function init($logenable=true, $start=false) {
   global $inipath;
   $config = parse_ini_file($inipath);
+  chmod($config["logPath"]."Log".date("H").".txt", 0666);
   if ($logenable && $start) {
       _log("START", $config);
       _log("CONFIGURATION------------------------------------", $config);
@@ -207,9 +208,16 @@ function scan_dir($dir) {
   *close the file
 **/
 function _log($line, $config) {
+
   $logfile = fopen($config["logPath"]."Log".date("H").".txt", "r+");
+
   if ($logfile) {
-    fseek($logfile, 0, SEEK_END);
+    if(date('d M Y', filemtime($config["logPath"]."Log".date("H").".txt")) < date('d M Y')){
+      fclose($logfile);
+      $logfile = fopen($config["logPath"]."Log".date("H").".txt", "w");
+    } else {
+      fseek($logfile, 0, SEEK_END);
+    }
   } else {
     $logfile = fopen($config["logPath"]."Log".date("H").".txt", "w");
   }

@@ -53,6 +53,7 @@ function create_new_download($toDownload, $config)  {
   $fileList = scan_dir($config["crawljobPath"]."added");
   $check = false;
   $job = false;
+  $epNum = "";
   foreach ($toDownload["MissingEpisode"] as $numEpisode => $download) {
     $epNum = $epNum.$numEpisode;
   }
