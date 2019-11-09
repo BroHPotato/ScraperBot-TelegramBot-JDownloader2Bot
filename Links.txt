@@ -1,1 +1,0 @@
-https://link.to.the.download.page##https://link.to.image.page##imdbIdCode##Relative/path/to/download/folder

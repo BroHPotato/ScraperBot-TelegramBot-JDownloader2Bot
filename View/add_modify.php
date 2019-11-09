@@ -26,7 +26,7 @@
   <div class="form-group row">
     <label for="savefolder" class="col-form-label">Path to Save</label>
     <div class="col">
-      <input id="savefolder"class="form-control" required placeholder="es. Name/of/the Series/season 01/" type="text" name="SaveFolder" pattern="([A-Za-z0-9]+( |/|\\))*+(/|\\)$" value="<?php echo "".($_GET["a"]=="modify") ? $entry[$_GET["id"]]["SaveFolder"] : ""; ?>">
+      <input id="savefolder"class="form-control" required placeholder="es. Name/of/the Series/season 01/" type="text" name="SaveFolder" pattern="([a-zA-Z0-9]+(\/|\\))+" value="<?php echo "".($_GET["a"]=="modify") ? $entry[$_GET["id"]]["SaveFolder"] : ""; ?>">
       <small class="form-text text-muted">Must end with  &frasl;</small>
     </div>
   </div>

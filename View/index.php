@@ -38,7 +38,7 @@
           <td><?php echo $value["Link"] ?></td>
           <td><?php echo $value["thetvdbId"] ?></td>
           <td><?php echo $value["SaveFolder"] ?></td>
-          <td><a href="index.php?a=delete&id=<?php echo $key ?>" class="btn btn-danger d-inline"><span class="fas fa-times d-inline"></span>Delete</a></td>
+          <td><a href="index.php?a=delete&id=<?php echo $key ?>" class="btn btn-danger d-inline" onclick="return confirm('Are you sure you want to delete <?php echo $value["Title"] ?>?')"><span class="fas fa-times d-inline"></span>Delete</a></td>
           <td><a href="index.php?a=modify&id=<?php echo $key ?>" class="btn btn-info d-inline"><span class="fas fa-pen d-inline"></span>Modify</a></td>
         </tr>
       <?php } ?>

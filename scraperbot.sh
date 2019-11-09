@@ -1,2 +1,2 @@
 #!/bin/bash
-php /home/pi/ScraperBot/Bot/scraperbot.php
+php /path/to/ScraperBot/Bot/scraperbot.php
