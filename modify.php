@@ -1,11 +1,14 @@
 <?php
-require_once "resorces.php";
+include_once 'Resources'.DIRECTORY_SEPARATOR.'resources.php';
+include_once 'Resources'.DIRECTORY_SEPARATOR.'Series.php';
 
-$config = init(false);
-$line = $_POST["Link"].$config["delimiter"].$_POST["Poster"].$config["delimiter"].$_POST["thetvdbId"].$config["delimiter"].$_POST["SaveFolder"]."\n";
-if (modify_line($_GET["id"], $line, $config)) {
+$config = init();
+$log_enable = true;
+$tomod = new Series($config, $_POST["Title"].".json");
+$tomod->update($_POST["Title"], $_POST["thetvdbId"], $_POST["Poster"], $_POST["SaveFolder"], $_POST["DownFolder"], $_POST["Link"]);
+$tomod->save();
+if (date('d M Y H:i', filemtime(__DIR__.DIRECTORY_SEPARATOR."Saves".DIRECTORY_SEPARATOR.$tomod->name.".json")) == date('d M Y H:i'))
   header("location: index.php?e=000");
-} else {
+else
   header("location: index.php?e=030");
-}
 ?>

@@ -14,7 +14,7 @@ a span, button span{
   color: #5682a3;
   margin-right: 0.3em;
 }
-.fa-download{
+.fa-download, .fa-tv{
   margin-right: 0.3em;
 }
 .contenttable td, .imgposter{
@@ -24,10 +24,11 @@ a span, button span{
   text-align: center;
 }
 .img-thumbnail{
-  max-width: 50%;
+  max-width: 65%;
+  min-width: 7em;
 }
 #previewimg{
-  max-width: 10%;
+  max-width: 15%;
   margin: 1em;
 }
 .badge{
@@ -71,4 +72,11 @@ td input{
 }
 .loglist{
   margin-top: 0.5em;
+}
+.button-triplet{
+  text-align: center;
+}
+.button-triplet a{
+  display: block !important;
+  margin: 0.3em 0;
 }
